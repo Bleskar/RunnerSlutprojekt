@@ -14,6 +14,13 @@ public class PlayerAnimation : MonoBehaviour
         sr = GetComponent<SpriteRenderer>(); //Get the spriterenderer component
     }
 
+    //sets the x-flip of the player and the weapon
+    public void PlayerRotation(Vector2 aimDirection)
+    {
+        sr.flipX = aimDirection.x < 0f; //flip the player's sprite in the correct direction
+        weaponSpriteRenderer.flipY = aimDirection.x < 0f; //flip the weapon's sprite in the correct direction
+    }
+
     //standard animitions that are called from outside the script using player input information
     public void Animate(float xInput, bool grounded)
     {
@@ -27,8 +34,6 @@ public class PlayerAnimation : MonoBehaviour
         {
             //play the walk animation when the player is moving
             Play("Walk");
-            sr.flipX = xInput < 0f; //flip the player's sprite in the correct direction
-            weaponSpriteRenderer.flipX = xInput < 0f; //flip the weapon's sprite in the correct direction
         }
         else
         {

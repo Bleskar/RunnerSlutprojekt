@@ -14,6 +14,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float acceleration = 50f; //acceleration when the player is inputting
     [SerializeField] float deacceleration = 80f; //deacceleration when the player isn't inputting
 
+    Vector2 velocity;
+
     [Header("Grounding")]
     [SerializeField] LayerMask ground; //Layermask for the ground, used for effective collision-checking
     [SerializeField] Vector2 groundBoxSize; //size of the collision with ground check-box
@@ -30,6 +32,7 @@ public class PlayerMovement : MonoBehaviour
     //REFRENCES
     PlayerAnimation anim; //The playeranimation component of this game object
     Rigidbody2D rb; //reference to the Rigidbody2D component on the player game object
+    CircleCollider2D col; //collider of the player
 
     //Called right before start
     private void Awake()
@@ -42,6 +45,7 @@ public class PlayerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>(); //getting the rigidbody2D on the player
         anim = GetComponent<PlayerAnimation>(); //getting the player animation script
+        col = GetComponent<CircleCollider2D>(); //gets the circle collider of the player
     }
 
     //Like Update, but called on a set interval, and is useful for calculating physics
@@ -53,18 +57,31 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float xInput = Input.GetAxis("Horizontal"); //get the x-input
-        Movement(xInput); //move the player with x-input
+        if (grounded) //if player is grounded
+        {
+            cayoteJumpTimer = cayoteTime; //cayoteJumpTimer is reset
+            if (velocity.y < 0f)
+                velocity.y = 0f; //if y velocity is less than zero then set y-vel to 0
+        }
+        else
+        {
+            velocity.y += Physics2D.gravity.y * Time.deltaTime; //apply gravity to velocity when the player isn't grounded
 
-        if (grounded) //if player is grounded then the cayoteJumpTimer is reset
-            cayoteJumpTimer = cayoteTime;
-        else if (cayoteJumpTimer > 0f) //else the timer will tick down
-            cayoteJumpTimer -= Time.deltaTime;
+            if (cayoteJumpTimer > 0f) //cayote timer will tick down
+                cayoteJumpTimer -= Time.deltaTime;
+        }
 
         if (Input.GetButtonDown("Jump") && CanJump)
             Jump(); //if the player is pressing the jump-button and can jump, the player will jump
 
+
+        float xInput = Input.GetAxis("Horizontal"); //get the x-input
+        Movement(xInput); //move the player with x-input
+
+        CheckWalls(); //check for walls in the directin of the players velocity
+
         anim.Animate(xInput, grounded); //animate the player
+        rb.velocity = velocity; //set velocity in the rigidbody
     }
 
     //returns true if the player is grounded
@@ -75,33 +92,50 @@ public class PlayerMovement : MonoBehaviour
     void Movement(float input)
     {
         //if the player is making an input
-        if (input != 0f)
+        if (input != 0f && Mathf.Abs(rb.velocity.x) < topSpeed)
         {
             //accelerate the player in the direction of the input
-            rb.velocity += new Vector2(acceleration * input * Time.deltaTime, 0f);
+            velocity.x += acceleration * input * Time.deltaTime;
 
             //cap the players velocity at topSpeed if x-velocity is greater than the topSpeed
             if (Mathf.Abs(rb.velocity.x) > topSpeed)
-                rb.velocity = new Vector2(Mathf.Sign(rb.velocity.x) * topSpeed, rb.velocity.y);
+                velocity.x = Mathf.Sign(rb.velocity.x) * topSpeed;
 
             return;
         }
 
         //Get the sign of the x-velocity before deaccelerating
-        float sign = Mathf.Sign(rb.velocity.x);
+        float sign = Mathf.Sign(velocity.x);
 
         //make player deaacelerate if they're not inputting
-        rb.velocity -= new Vector2(deacceleration * Time.deltaTime * sign, 0f);
+        velocity.x -= deacceleration * Time.deltaTime * sign;
 
         //if the new sign of the players x-velocity is different from the old sign, then stop the player
         if (Mathf.Sign(rb.velocity.x) != sign)
-            rb.velocity = new Vector2(0f, rb.velocity.y);
+            velocity.x = 0f;
     }
 
     //Makes the player Jump
     void Jump()
     {
-        rb.velocity = new Vector2(rb.velocity.x, jumpStrength);
+        velocity.y = jumpStrength;
+    }
+
+    //Applies velocity to player
+    public void ApplyVelocity(Vector2 addedVelocity)
+    {
+        velocity += addedVelocity;
+    }
+
+    //Checks for wall collisions
+    void CheckWalls()
+    {
+        RaycastHit2D hit = Physics2D.CircleCast(transform.position + (Vector3)col.offset, col.radius, velocity.x * Vector2.right, Mathf.Abs(velocity.x) * Time.deltaTime, ground);
+
+        if (!hit)
+            return;
+
+        velocity.x = 0f;
     }
 
     //Gizmos helps visualize/debug your code by for example drawing boxes in unity
