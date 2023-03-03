@@ -30,6 +30,15 @@ public class PlayerMovement : MonoBehaviour
     bool CanJump => cayoteJumpTimer > 0f && rb.velocity.y <= 0f;
 
     //REFRENCES
+    public PlayerAnimation Animation
+    {
+        get => anim;
+        set
+        {
+            anim = value;
+        }
+    }
+
     PlayerAnimation anim; //The playeranimation component of this game object
     Rigidbody2D rb; //reference to the Rigidbody2D component on the player game object
     CircleCollider2D col; //collider of the player

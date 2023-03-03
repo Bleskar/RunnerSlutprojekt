@@ -21,14 +21,31 @@ public class PlayerCombat : MonoBehaviour
 
     [SerializeField] Projectile projectilePrefab; //Reference to the projectile prefab that will be shot out
 
+    public PlayerAnimation Animation
+    {
+        get => anim;
+        set => anim = value;
+    }
+
+    public PlayerMovement Movement
+    {
+        get => movement;
+        set => movement = value;
+    }
+
+    public Projectile ProjectilePrefab
+    {
+        get => projectilePrefab;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         weaponSr = weapon.GetComponent<SpriteRenderer>(); //get the spriterenderer of the weapon
         weaponOffset = weapon.localPosition; //set weapon offset
 
-        anim = GetComponent<PlayerAnimation>(); //get the player animation component
-        movement = GetComponent<PlayerMovement>(); //get the player animation component
+        Animation = GetComponent<PlayerAnimation>(); //get the player animation component
+        Movement = GetComponent<PlayerMovement>(); //get the player animation component
 
         Reload();
     }
@@ -57,7 +74,7 @@ public class PlayerCombat : MonoBehaviour
         weapon.localPosition = new Vector3(aimDirection.x, aimDirection.y) * -recoil + weaponOffset; //set the position of the weapon based on the recoil
         recoil = Mathf.Lerp(recoil, 0f, Time.deltaTime * 8f); //lerp the recoil back to 0
 
-        anim.PlayerRotation(aimDirection); //set the weapon and player flip
+        Animation.PlayerRotation(aimDirection); //set the weapon and player flip
     }
 
     //shoots a projectile in the direction
@@ -69,7 +86,7 @@ public class PlayerCombat : MonoBehaviour
         ammuntion--; //ammunition ticks down after a shot
 
         recoil = .25f; //set recoil
-        movement.ApplyVelocity(-direction * shootKnockback); //apply knockback
+        Movement.ApplyVelocity(-direction * shootKnockback); //apply knockback
         AudioManager.Play("Blast"); //play the shotgun sound effect
 
         Projectile clone = Instantiate(projectilePrefab, weapon.transform.position, Quaternion.identity); //clone the prefab to the game

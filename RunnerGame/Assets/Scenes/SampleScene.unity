@@ -758,7 +758,7 @@ MonoBehaviour:
     volume: 1
     pitch: 1
     pitchRandom: 0.25
-  musicVolume: 1
+  musicVolume: 0
   musicLibrary:
   - name: Duck n cover
     source: {fileID: 0}
