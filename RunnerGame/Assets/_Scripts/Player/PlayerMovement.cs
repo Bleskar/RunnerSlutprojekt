@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 //this script requires the Rigidbody2D and PlayerAnimation component
 [RequireComponent(typeof(Rigidbody2D))]
@@ -24,21 +25,16 @@ public class PlayerMovement : MonoBehaviour
     [Header("Jumping")]
     [SerializeField] float cayoteTime = .1f; //how long time after the player has left the ground, can they still jump
     [SerializeField] float jumpStrength = 15f; //how strong the player's jump is
+    [SerializeField] float jumpHold = .2f; //how long can the player hold the jumpbutton (i.e. jump variation; jump height is dependant upon how long the player holds the jump button)
+    [SerializeField] float airResistance = 10f; //air resistance, applied to y-velocity
 
     bool grounded;
     float cayoteJumpTimer;
-    bool CanJump => cayoteJumpTimer > 0f && rb.velocity.y <= 0f;
+    bool CanJump => cayoteJumpTimer > 0f && rb.velocity.y <= 0f && !jumping;
+    bool jumping;
+    float holdTimer;
 
     //REFRENCES
-    public PlayerAnimation Animation
-    {
-        get => anim;
-        set
-        {
-            anim = value;
-        }
-    }
-
     PlayerAnimation anim; //The playeranimation component of this game object
     Rigidbody2D rb; //reference to the Rigidbody2D component on the player game object
     CircleCollider2D col; //collider of the player
@@ -81,7 +77,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         if (Input.GetButtonDown("Jump") && CanJump)
-            Jump(); //if the player is pressing the jump-button and can jump, the player will jump
+            StartJump(); //if the player is pressing the jump-button and can jump, the player will start jumping
 
 
         float xInput = Input.GetAxis("Horizontal"); //get the x-input
@@ -90,6 +86,7 @@ public class PlayerMovement : MonoBehaviour
         CheckWalls(); //check for walls in the directin of the players velocity
 
         anim.Animate(xInput, grounded); //animate the player
+        velocity.y -= airResistance * Mathf.Pow(velocity.y * Time.deltaTime, 2) * Mathf.Sign(velocity.y); //apply air resistance
         rb.velocity = velocity; //set velocity in the rigidbody
     }
 
@@ -124,10 +121,29 @@ public class PlayerMovement : MonoBehaviour
             velocity.x = 0f;
     }
 
-    //Makes the player Jump
-    void Jump()
+    //starts a jump
+    void StartJump()
     {
-        velocity.y = jumpStrength;
+        jumping = true;
+        holdTimer = jumpHold;
+
+        StartCoroutine(Jump());
+    }
+
+    //Makes the player jump while holding the jump button
+    IEnumerator Jump()
+    {
+        while (holdTimer > 0)
+        {
+            if (Input.GetButtonUp("Jump")) //stop jumåing if the player releases the jump button
+                break;
+
+            velocity.y = jumpStrength;
+            holdTimer -= Time.deltaTime;
+
+            yield return null;
+        }
+        jumping = false;
     }
 
     //Applies velocity to player

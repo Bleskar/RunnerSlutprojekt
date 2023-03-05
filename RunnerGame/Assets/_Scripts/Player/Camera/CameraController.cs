@@ -12,12 +12,6 @@ public class CameraController : MonoBehaviour
         get => PlayerMovement.Instance;
     }
 
-    public Room CurrentRoom
-    {
-        get => currentRoom;
-        set => currentRoom = value;
-    }
-
     [SerializeField] Camera displayCamera; //display camera
     [SerializeField] float speed = 8f; // the speed of the camera
 
@@ -53,14 +47,14 @@ public class CameraController : MonoBehaviour
     {
         pos.z = zorig; //setting the z position to the original z position
 
-        if (!CurrentRoom) //if the camera doesn't have a room that the player is in then return the unchanged position
+        if (!currentRoom) //if the camera doesn't have a room that the player is in then return the unchanged position
             return pos;
 
         //clamp the x-position
-        pos.x = Mathf.Clamp(pos.x, CurrentRoom.RoomBorders.x, CurrentRoom.RoomBorders.y);
+        pos.x = Mathf.Clamp(pos.x, currentRoom.RoomBorders.x, currentRoom.RoomBorders.y);
 
         //clamp the y-position
-        pos.y = Mathf.Clamp(pos.y, CurrentRoom.RoomBorders.z, CurrentRoom.RoomBorders.w);
+        pos.y = Mathf.Clamp(pos.y, currentRoom.RoomBorders.z, currentRoom.RoomBorders.w);
 
         //return the new position
         return pos;
@@ -76,7 +70,7 @@ public class CameraController : MonoBehaviour
             if (rooms[i].CheckForPlayer())
             {
                 //finds player
-                if (CurrentRoom != rooms[i])
+                if (currentRoom != rooms[i])
                 {
                     //change the room to this room
                     RoomChange(rooms[i]);
@@ -88,7 +82,7 @@ public class CameraController : MonoBehaviour
     //change the current room to the room "r"
     void RoomChange(Room r)
     {
-        CurrentRoom = r;
+        currentRoom = r;
 
         for (int i = 0; i < rooms.Length; i++) //disable every room except for the one the player is in
         {

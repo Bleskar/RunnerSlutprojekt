@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="EnemyBase" Collapsed="true">
+    <Position X="8" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAEAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAg=</HashCode>
+      <FileName>Assets\_Scripts\Enemies\EnemyBase.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="FlyingEnemy" Collapsed="true">
+    <Position X="8" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\_Scripts\Enemies\FlyingEnemy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Projectile" Collapsed="true">
+    <Position X="0.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAACGIAIAAAASAIAAAAAAAAAwCIAABAAAAAAAA=</HashCode>
+      <FileName>Assets\_Scripts\Environment\Projectile.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AudioManager" Collapsed="true">
+    <Position X="0.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAQAAAAAIAAABABBEABEIAAAAAAgAwAAAICAABEE=</HashCode>
+      <FileName>Assets\_Scripts\Managers\AudioManager.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="currentMusic" />
+      <Field Name="soundLibrary" />
+      <Field Name="musicLibrary" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Sound" Collapsed="true">
+    <Position X="3.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAIAAAAAAAAAAAgEAEAggAAAAAACAAA=</HashCode>
+      <FileName>Assets\_Scripts\Managers\Sound.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CameraController" Collapsed="true">
+    <Position X="6.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQgAAACACAAAAAAAgKAAAAAAAAEAwAARAAAAEIAEEA=</HashCode>
+      <FileName>Assets\_Scripts\Player\Camera\CameraController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="rooms" />
+      <Field Name="currentRoom" />
+      <Property Name="PlayerMovement" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Room" Collapsed="true">
+    <Position X="9.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgEAAAAAAYAAAAAAAAAAAAQAgCAAAABAAAAAAAAAIA=</HashCode>
+      <FileName>Assets\_Scripts\Player\Camera\Room.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlayerAnimation" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAIQAAAAAAAAQAAAAAAgAAgQAAAAAAACA=</HashCode>
+      <FileName>Assets\_Scripts\Player\PlayerAnimation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlayerCombat" Collapsed="true">
+    <Position X="2.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAACCGBAAAQABACAAACAAAAAAQLQAAEAAABAA=</HashCode>
+      <FileName>Assets\_Scripts\Player\PlayerCombat.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="projectilePrefab" />
+      <Field Name="anim" />
+      <Field Name="movement" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="PlayerMovement" Collapsed="true">
+    <Position X="5.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQUIAhAAjAICAAEFAACAQAAAEAAAAQAQQQAAAAQgEA=</HashCode>
+      <FileName>Assets\_Scripts\Player\PlayerMovement.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="anim" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="UICursor" Collapsed="true">
+    <Position X="12.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\_Scripts\UI\UICursor.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="IKillable" Collapsed="true">
+    <Position X="9.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\_Scripts\Enemies\IKillable.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

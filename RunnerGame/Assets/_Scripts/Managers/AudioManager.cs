@@ -7,8 +7,8 @@ public class AudioManager : MonoBehaviour
     public static AudioManager Instance { get; private set; } //Singleton of the audio manager
 
     AudioSource musicSource; //audiosource of the music
-    public string CurrentMusic => currentSound.name; //current playing music
-    Sound currentSound; //current music information
+    public string CurrentMusic => currentMusic.name; //current playing music
+    Sound currentMusic; //current music information
     bool transitioning; //is the music transitioning?
 
     [HideInInspector] public bool death; //is the player dead?
@@ -57,8 +57,8 @@ public class AudioManager : MonoBehaviour
     {
         if (!transitioning)
         {
-            if (currentSound != null)
-                musicSource.volume = musicVolume * currentSound.volume * masterVolume; //set the volume of the music
+            if (currentMusic != null)
+                musicSource.volume = musicVolume * currentMusic.volume * masterVolume; //set the volume of the music
             else
                 musicSource.volume = 0f; //if there is now current music then set volume to 0
         }
@@ -78,12 +78,12 @@ public class AudioManager : MonoBehaviour
     {
         Sound s = Array.Find(musicLibrary, i => i.name == a);
 
-        if (s == currentSound) return;
+        if (s == currentMusic) return;
 
         StopAllCoroutines();
-        StartCoroutine(MusicTransition(currentSound, s));
+        StartCoroutine(MusicTransition(currentMusic, s));
 
-        currentSound = s;
+        currentMusic = s;
     }
 
     //handles the transition between different songs
