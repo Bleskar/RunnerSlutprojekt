@@ -1,9 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public class FlyingEnemy : EnemyBase
 {
+    private void Start()
+    {
+        Initialize();
+    }
+
+    private void Update()
+    {
+        
+    }
+
     public override void Kill()
     {
         Destroy(gameObject);

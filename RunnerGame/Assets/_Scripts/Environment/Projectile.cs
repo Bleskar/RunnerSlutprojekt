@@ -7,6 +7,7 @@ public class Projectile : MonoBehaviour
     [Header("Movement and collision")]
 
     Vector2 direction; //direction must always be normalized;
+
     public Vector2 Direction
     {
         get => direction;
@@ -17,6 +18,7 @@ public class Projectile : MonoBehaviour
     [SerializeField] float radius = .25f;
 
     [Header("Settings")]
+    [SerializeField] int damage = 1; //how much damage does this projectile do?
     [SerializeField] LayerMask targets; //which layer will this projectile target?
     [SerializeField] float aliveTime = 5f; //how long will this projectile be alive
     bool dead;
@@ -54,6 +56,13 @@ public class Projectile : MonoBehaviour
         {
             //projectiel has hit an object
             transform.position += hit.distance * (Vector3)Direction; //move the projectile to the hit
+
+            IKillable ik = GetComponent<IKillable>(); //check if the object can be killed
+            if (ik != null)
+            {
+                ik.Damage(damage, direction);
+            }
+
             Kill(); //kill the projectile
             return;
         }

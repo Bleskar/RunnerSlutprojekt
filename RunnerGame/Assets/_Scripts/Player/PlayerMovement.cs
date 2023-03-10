@@ -86,7 +86,7 @@ public class PlayerMovement : MonoBehaviour
         CheckWalls(); //check for walls in the directin of the players velocity
 
         anim.Animate(xInput, grounded); //animate the player
-        velocity.y -= airResistance * Mathf.Pow(velocity.y * Time.deltaTime, 2) * Mathf.Sign(velocity.y); //apply air resistance
+        velocity.y -= airResistance * Mathf.Pow(velocity.y, 2) * Mathf.Sign(velocity.y) * Time.deltaTime; //apply air resistance
         rb.velocity = velocity; //set velocity in the rigidbody
     }
 

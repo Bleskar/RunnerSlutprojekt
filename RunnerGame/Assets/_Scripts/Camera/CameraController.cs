@@ -19,6 +19,7 @@ public class CameraController : MonoBehaviour
     Room currentRoom; //the room that the player is currently in
 
     float zorig; //original z position of the camera
+    float screenShake; //how much is the screen shaking
 
     private void Awake()
     {
@@ -38,8 +39,21 @@ public class CameraController : MonoBehaviour
 
         //getting the target position within the confines of the current room
         Vector3 targetPosition = TryGoToPosition(PlayerMovement.transform.position);
+
+        //adds the screenshake to the camera
+        Vector2 shake = Random.insideUnitCircle * screenShake * 2f;
+        screenShake -= Time.deltaTime; //decrease screenShake;
+        if (screenShake < 0f) //screenshake can't be less than zero
+            screenShake = 0f;
+
         //lerping the camera position to the target position
-        transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * speed);
+        transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * speed) + (Vector3)shake;
+    }
+
+    //Applies screen shake effects
+    public void ScreenShake(float magnitude)
+    {
+        screenShake = magnitude;
     }
 
     //returns the new position within the limits of the current room

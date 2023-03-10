@@ -9,11 +9,21 @@ public abstract class EnemyBase : MonoBehaviour, IKillable
 
     //refrences
     protected Rigidbody2D rb;
+    protected SpriteRenderer sr;
+
+    //Simple method for getting all the needed refrences in the child class
+    protected void Initialize()
+    {
+        rb = GetComponent<Rigidbody2D>();
+        sr = GetComponent<SpriteRenderer>();
+    }
 
     public virtual void Damage(int dmg, Vector2 knockback)
     {
-        health -= dmg;
-        if (health <= 0)
+        sr.color = Color.red; //Apply damage effects to the enemy
+        health -= dmg; //decrease health
+        CameraController.Instance.ScreenShake(1f); //make the screen shake when an enemy is hit
+        if (health <= 0) //check if health is zero, if so then run the "Kill" method
             Kill();
     }
 
