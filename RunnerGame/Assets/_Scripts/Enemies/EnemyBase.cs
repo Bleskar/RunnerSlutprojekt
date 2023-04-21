@@ -22,7 +22,7 @@ public abstract class EnemyBase : MonoBehaviour, IKillable
     {
         sr.color = Color.red; //Apply damage effects to the enemy
         health -= dmg; //decrease health
-        CameraController.Instance.ScreenShake(1f); //make the screen shake when an enemy is hit
+        CameraController.Instance.ScreenShake(.1f); //make the screen shake when an enemy is hit
         if (health <= 0) //check if health is zero, if so then run the "Kill" method
             Kill();
     }

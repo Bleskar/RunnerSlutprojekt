@@ -3,6 +3,13 @@ using UnityEngine;
 
 public class PlayerCombat : MonoBehaviour
 {
+    public static PlayerCombat Instance { get; private set; } // singleton of this script in the game
+
+    private void Awake()
+    {
+        Instance = this; //set the singleton
+    }
+
     [SerializeField] Transform weapon; //transform of the weapon game-object
     SpriteRenderer weaponSr; //spriterender of the weapon
 
@@ -12,12 +19,12 @@ public class PlayerCombat : MonoBehaviour
     float recoil; //current recoil of the weapon
     Vector3 weaponOffset; //start weapon offset from the player
 
-    public int ammuntion; //how much ammunition is left in the weapon
+    public int ammunition; //how much ammunition is left in the weapon
     [SerializeField] float shootKnockback = 3f; //knockback
     [SerializeField] float shootDelay = .2f; //delay between shots
     float shootCooldown; //cooldown between shots
 
-    bool reloading; //true if the player is reloading
+    public bool reloading; //true if the player is reloading
 
     [SerializeField] Projectile projectilePrefab; //Reference to the projectile prefab that will be shot out
 
@@ -51,7 +58,7 @@ public class PlayerCombat : MonoBehaviour
         else if (shootCooldown > 0)
             shootCooldown -= Time.deltaTime;
 
-        if (Input.GetButtonDown("Reload") && ammuntion < 2)
+        if (Input.GetButtonDown("Reload") && ammunition < 2)
             StartReload();
 
         weapon.localPosition = new Vector3(aimDirection.x, aimDirection.y) * -recoil + weaponOffset; //set the position of the weapon based on the recoil
@@ -64,9 +71,9 @@ public class PlayerCombat : MonoBehaviour
     public void Shoot(Vector2 direction)
     {
         //must have ammuntion to shoot
-        if (ammuntion <= 0)
+        if (ammunition <= 0)
             return;
-        ammuntion--; //ammunition ticks down after a shot
+        ammunition--; //ammunition ticks down after a shot
 
         recoil = .25f; //set recoil
         movement.ApplyVelocity(-direction * shootKnockback); //apply knockback
@@ -75,7 +82,7 @@ public class PlayerCombat : MonoBehaviour
         Projectile clone = Instantiate(projectilePrefab, weapon.transform.position, Quaternion.identity); //clone the prefab to the game
         clone.Direction = direction; //set the direction of the projctile
 
-        if (ammuntion <= 0) //automatically reload if ammunition is 0
+        if (ammunition <= 0) //automatically reload if ammunition is 0
             StartReload();
     }
 
@@ -86,13 +93,23 @@ public class PlayerCombat : MonoBehaviour
             return;
 
         reloading = true;
-        StartCoroutine(Reloading());
+        StartCoroutine(ReloadRoutine());
     }
 
+    public bool Reloading => reloading;
+
     //reload coroutine
-    IEnumerator Reloading()
+    IEnumerator ReloadRoutine()
     {
-        yield return new WaitForSeconds(.7f);
+        float timer = 0f;
+
+        while (timer < .7f)
+        {
+            timer += Time.deltaTime;
+            AmmunitionDisplay.Instance.reloadTime = timer / .7f;
+            yield return null;
+        }
+
         reloading = false;
         Reload();
     }
@@ -100,6 +117,6 @@ public class PlayerCombat : MonoBehaviour
     //reloads the weapon
     public void Reload()
     {
-        ammuntion = 2;
+        ammunition = 2;
     }
 }

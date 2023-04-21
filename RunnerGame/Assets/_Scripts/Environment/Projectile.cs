@@ -57,7 +57,7 @@ public class Projectile : MonoBehaviour
             //projectiel has hit an object
             transform.position += hit.distance * (Vector3)Direction; //move the projectile to the hit
 
-            IKillable ik = GetComponent<IKillable>(); //check if the object can be killed
+            IKillable ik = hit.transform.GetComponent<IKillable>(); //check if the object can be killed
             if (ik != null)
             {
                 ik.Damage(damage, direction);
