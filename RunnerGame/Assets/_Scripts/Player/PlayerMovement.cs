@@ -56,6 +56,7 @@ public class PlayerMovement : MonoBehaviour
     //Like Update, but called on a set interval, and is useful for calculating physics
     private void FixedUpdate()
     {
+        CheckWalls(); //check for walls in the directin of the players velocity
         grounded = Grounded(); //is player grounded?
     }
 
@@ -81,12 +82,11 @@ public class PlayerMovement : MonoBehaviour
 
 
         float xInput = Input.GetAxis("Horizontal"); //get the x-input
+        velocity.y -= airResistance * Mathf.Pow(velocity.y, 2) * Mathf.Sign(velocity.y) * Time.deltaTime; //apply air resistance
         Movement(xInput); //move the player with x-input
 
-        CheckWalls(); //check for walls in the directin of the players velocity
 
         anim.Animate(xInput, grounded); //animate the player
-        velocity.y -= airResistance * Mathf.Pow(velocity.y, 2) * Mathf.Sign(velocity.y) * Time.deltaTime; //apply air resistance
         rb.velocity = velocity; //set velocity in the rigidbody
     }
 
@@ -155,7 +155,7 @@ public class PlayerMovement : MonoBehaviour
     //Checks for wall collisions
     void CheckWalls()
     {
-        RaycastHit2D hit = Physics2D.CircleCast(transform.position + (Vector3)col.offset, col.radius, velocity.x * Vector2.right, Mathf.Abs(velocity.x) * Time.deltaTime, ground);
+        RaycastHit2D hit = Physics2D.CircleCast(transform.position + (Vector3)col.offset, col.radius - .05f, velocity.x * Vector2.right, Mathf.Abs(velocity.x) * Time.deltaTime, ground);
 
         if (!hit)
             return;

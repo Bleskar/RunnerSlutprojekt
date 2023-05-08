@@ -4934,6 +4934,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 20
   radius: 0.1
+  damage: 1
   targets:
     serializedVersion: 2
     m_Bits: 557056

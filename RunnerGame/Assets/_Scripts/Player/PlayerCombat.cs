@@ -50,7 +50,7 @@ public class PlayerCombat : MonoBehaviour
         float rotation = Mathf.Atan2(aimDirection.y, aimDirection.x);
         weapon.rotation = Quaternion.Euler(0f, 0f, rotation * 180f / Mathf.PI);
 
-        if (Input.GetButton("Fire") && shootCooldown <= 0f) //if the fire button is pressed, and the the shoot cooldown is zero or less, then the player shoots
+        if (Input.GetButton("Fire") && shootCooldown <= 0f && !Reloading) //if the fire button is pressed, and the the shoot cooldown is zero or less, then the player shoots
         {
             shootCooldown = shootDelay;
             Shoot(aimDirection);
@@ -58,7 +58,7 @@ public class PlayerCombat : MonoBehaviour
         else if (shootCooldown > 0)
             shootCooldown -= Time.deltaTime;
 
-        if (Input.GetButtonDown("Reload") && ammunition < 2)
+        if (Input.GetButtonDown("Reload") && ammunition < 2 && !Reloading)
             StartReload();
 
         weapon.localPosition = new Vector3(aimDirection.x, aimDirection.y) * -recoil + weaponOffset; //set the position of the weapon based on the recoil
