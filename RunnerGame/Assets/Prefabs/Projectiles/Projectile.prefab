@@ -4932,6 +4932,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b4122f4b41cec64dbfbc328b6909d19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bounces: 3
   speed: 20
   radius: 0.1
   damage: 1

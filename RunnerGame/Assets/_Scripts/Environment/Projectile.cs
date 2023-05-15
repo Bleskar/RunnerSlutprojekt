@@ -5,7 +5,7 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     [Header("Movement and collision")]
-
+    [SerializeField] int bounces = 0; // how many times the projectile bounces
     Vector2 direction; //direction must always be normalized;
 
     public Vector2 Direction
@@ -60,11 +60,25 @@ public class Projectile : MonoBehaviour
             IKillable ik = hit.transform.GetComponent<IKillable>(); //check if the object can be killed
             if (ik != null)
             {
+                //do damage
                 ik.Damage(damage, direction);
             }
 
-            Kill(); //kill the projectile
-            return;
+            //if it has bounces left, then bounce off of the surface
+            if (bounces > 0)
+            {
+                bounces--;
+                Bounce(hit.normal);
+                //set the position to a position away for the wall,
+                //so the projectile doesnt collide multiple times
+                transform.position = hit.point + deltaTime * speed * Direction;
+                return;
+            }
+            else
+            {
+                Kill(); //if there are no bounces left, kill the projectile
+                return;
+            }
         }
 
         //if the projectile doesn't hit anything this frame, it moves along as normal
@@ -81,6 +95,11 @@ public class Projectile : MonoBehaviour
 
         dead = true;
         aliveTime = 3f; //the projectile must stay alive a few seconds after it's been killed so that the particle effects can finish emitting
+    }
+
+    public void Bounce(Vector2 normal)
+    {
+        direction = Vector2.Reflect(direction, normal);
     }
 
     private void OnDrawGizmosSelected()
