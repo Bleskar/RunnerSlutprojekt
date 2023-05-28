@@ -119,4 +119,10 @@ public class PlayerCombat : MonoBehaviour
     {
         ammunition = 2;
     }
+
+    //this method should be called once the player collides with an enemy
+    public void Kill()
+    {
+        print("player dieded!11! :(");
+    }
 }

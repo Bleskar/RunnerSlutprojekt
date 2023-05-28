@@ -9,6 +9,8 @@ public class FlyingEnemy : EnemyBase
     [SerializeField] bool pingpong = true; //if true then it will go back and forth (start->end end->start)
                                            //, else it will loop it's movement (start->end->start->end)
 
+    bool initialized; //wether or not the enemy has been initialized yet
+
     private void Start()
     {
         transform.position = points[0].transform.position;
@@ -21,9 +23,18 @@ public class FlyingEnemy : EnemyBase
         StartCoroutine(Patrol());
     }
 
+    private void OnEnable()
+    {
+        if (!initialized)
+            return;
+        //only start patrolling once the object has been initialized in the Start() method
+        StartCoroutine(Patrol());
+    }
+
     private void Update()
     {
         sr.color = Color.Lerp(sr.color, Color.white, Time.deltaTime); //Lerp the color back to it's origin to create damage effects
+        AttackBox(Vector2.zero, Vector2.one); //try to hurt the player
     }
 
     IEnumerator Patrol()
