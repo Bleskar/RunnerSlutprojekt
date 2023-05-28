@@ -85,7 +85,7 @@ public class MainMenu : MonoBehaviour
         //slide in buttons
         for (int i = 0; i < buttons.Length; i++)
         {
-            AudioManager.ForceMusic("Swoosh");
+            AudioManager.Play("Swoosh");
             buttons[i].gameObject.SetActive(true);
             timer = 0f;
             while (timer < .5f)
