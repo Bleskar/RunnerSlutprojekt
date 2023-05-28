@@ -85,16 +85,16 @@ public class MainMenu : MonoBehaviour
         //slide in buttons
         for (int i = 0; i < buttons.Length; i++)
         {
-            AudioManager.Play("Swoosh");
             buttons[i].gameObject.SetActive(true);
             timer = 0f;
             while (timer < .5f)
             {
                 float f = timer / .5f;
-                buttons[i].anchoredPosition = new Vector2(Screen.currentResolution.width * (1f - f), -24f * i);
+                buttons[i].anchoredPosition = new Vector2(Screen.currentResolution.width * .5f * (1f - f), -24f * i);
                 timer += Time.deltaTime;
                 yield return null;
             }
+            AudioManager.Play("Swoosh");
             buttons[i].anchoredPosition = new Vector2(0f, -24f * i);
         }
     }
