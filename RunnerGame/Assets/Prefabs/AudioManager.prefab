@@ -1,0 +1,102 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7294281199294802164
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7294281199294802162}
+  - component: {fileID: 7294281199294802163}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7294281199294802162
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7294281199294802164}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7294281199294802163
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7294281199294802164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ff066918aea82a4e9f8c7aec89b69fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  death: 0
+  masterVolume: 0.6
+  effectsVolume: 1
+  soundLibrary:
+  - name: Blast
+    source: {fileID: 0}
+    clip: {fileID: 8300000, guid: 49e6245a173b4d8488b51e116c381a7b, type: 3}
+    volume: 0.9
+    pitch: 1
+    pitchRandom: 0.25
+  - name: Tick
+    source: {fileID: 0}
+    clip: {fileID: 8300000, guid: c479585dfb3759d44bafd78bd17044af, type: 3}
+    volume: 1
+    pitch: 1
+    pitchRandom: 0
+  - name: Go
+    source: {fileID: 0}
+    clip: {fileID: 8300000, guid: 6a0afc009bcd00d419e4451cb23b2620, type: 3}
+    volume: 1
+    pitch: 1
+    pitchRandom: 0
+  - name: Bounce
+    source: {fileID: 0}
+    clip: {fileID: 8300000, guid: dec3350f20143be4b8bdee88e69a02c6, type: 3}
+    volume: 0.5
+    pitch: 1
+    pitchRandom: 0.25
+  - name: Bop
+    source: {fileID: 0}
+    clip: {fileID: 8300000, guid: 33488a5c609060049824c791180814fe, type: 3}
+    volume: 1
+    pitch: 1
+    pitchRandom: 0.25
+  - name: Death
+    source: {fileID: 0}
+    clip: {fileID: 8300000, guid: ffd61173a5377c04f8f9ce338132e164, type: 3}
+    volume: 1
+    pitch: 1
+    pitchRandom: 0.1
+  musicVolume: 0.75
+  musicLibrary:
+  - name: Duck n cover
+    source: {fileID: 0}
+    clip: {fileID: 8300000, guid: 6bbf47006b0871f45ad9036898dcb8ab, type: 3}
+    volume: 1
+    pitch: 1
+    pitchRandom: 0
+  - name: Coolduck
+    source: {fileID: 0}
+    clip: {fileID: 8300000, guid: fc7c41b2ebab7a04cb7014361ab01fda, type: 3}
+    volume: 1
+    pitch: 1
+    pitchRandom: 0
+  transitionTime: 0.5
+  areaMusic: Duck n cover

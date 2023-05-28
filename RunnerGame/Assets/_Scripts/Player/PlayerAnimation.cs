@@ -14,6 +14,11 @@ public class PlayerAnimation : MonoBehaviour
         sr = GetComponent<SpriteRenderer>(); //Get the spriterenderer component
     }
 
+    private void Update()
+    {
+        sr.enabled = !PlayerCombat.Instance.Dead; //hide the player if its dead
+    }
+
     //sets the x-flip of the player and the weapon
     public void PlayerRotation(Vector2 aimDirection)
     {

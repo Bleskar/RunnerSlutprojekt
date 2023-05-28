@@ -30,11 +30,14 @@ public class PlayerMovement : MonoBehaviour
 
     bool grounded;
     float cayoteJumpTimer;
-    bool CanJump => cayoteJumpTimer > 0f && rb.velocity.y <= 0f && !jumping;
+    bool CanJump => cayoteJumpTimer > 0f && rb.velocity.y <= 0f && !jumping && !Frozen && !Combat.Dead;
     bool jumping;
     float holdTimer;
 
+    public bool Frozen => StartTimer.Counting; //can't move when bool is true
+
     //REFRENCES
+    public PlayerCombat Combat { get; private set; } //The combat script attached to this object
     PlayerAnimation anim; //The playeranimation component of this game object
     Rigidbody2D rb; //reference to the Rigidbody2D component on the player game object
     CircleCollider2D col; //collider of the player
@@ -51,6 +54,7 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>(); //getting the rigidbody2D on the player
         anim = GetComponent<PlayerAnimation>(); //getting the player animation script
         col = GetComponent<CircleCollider2D>(); //gets the circle collider of the player
+        Combat = GetComponent<PlayerCombat>(); //get the player combat component of this object
     }
 
     //Like Update, but called on a set interval, and is useful for calculating physics
@@ -63,11 +67,14 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Combat.Dead)
+            return;
+
         if (grounded) //if player is grounded
         {
             cayoteJumpTimer = cayoteTime; //cayoteJumpTimer is reset
             if (velocity.y < 0f)
-                velocity.y = 0f; //if y velocity is less than zero then set y-vel to 0
+                velocity.y = -2f; //if y velocity is less than zero then set y-vel to 0
         }
         else
         {
@@ -82,6 +89,8 @@ public class PlayerMovement : MonoBehaviour
 
 
         float xInput = Input.GetAxis("Horizontal"); //get the x-input
+        if (Frozen) xInput = 0f; //player is not allowed to move if the frozen variable is true
+
         velocity.y -= airResistance * Mathf.Pow(velocity.y, 2) * Mathf.Sign(velocity.y) * Time.deltaTime; //apply air resistance
         Movement(xInput); //move the player with x-input
 
@@ -135,7 +144,7 @@ public class PlayerMovement : MonoBehaviour
     {
         while (holdTimer > 0)
         {
-            if (Input.GetButtonUp("Jump")) //stop jumåing if the player releases the jump button
+            if (Input.GetButtonUp("Jump")) //stop jumping if the player releases the jump button
                 break;
 
             velocity.y = jumpStrength;

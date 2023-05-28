@@ -64,6 +64,7 @@ public class Projectile : MonoBehaviour
                 ik.Damage(damage, direction);
             }
 
+            EffectManager.Play("BounceSpark", 20, transform.position);
             //if it has bounces left, then bounce off of the surface
             if (bounces > 0)
             {
@@ -71,14 +72,14 @@ public class Projectile : MonoBehaviour
                 Bounce(hit.normal);
                 //set the position to a position away for the wall,
                 //so the projectile doesnt collide multiple times
-                transform.position = hit.point + deltaTime * speed * Direction;
-                return;
+                transform.position = hit.point + Direction * .25f;
             }
             else
             {
                 Kill(); //if there are no bounces left, kill the projectile
-                return;
             }
+
+            return;
         }
 
         //if the projectile doesn't hit anything this frame, it moves along as normal
@@ -99,7 +100,8 @@ public class Projectile : MonoBehaviour
 
     public void Bounce(Vector2 normal)
     {
-        direction = Vector2.Reflect(direction, normal);
+        AudioManager.Play("Bounce");
+        Direction = Vector2.Reflect(Direction, normal);
     }
 
     private void OnDrawGizmosSelected()

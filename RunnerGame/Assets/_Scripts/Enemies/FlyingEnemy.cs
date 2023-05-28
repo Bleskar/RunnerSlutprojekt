@@ -6,8 +6,6 @@ public class FlyingEnemy : EnemyBase
     [SerializeField] Transform[] points = new Transform[0]; //the points that the enemy flies between (starts at point 0)
     Vector3[] pointsPosition; //the positions of the patrol points,
                               //doing this so that the points can be children to the enemy to reduce clutter in the heirarchy
-    [SerializeField] bool pingpong = true; //if true then it will go back and forth (start->end end->start)
-                                           //, else it will loop it's movement (start->end->start->end)
 
     bool initialized; //wether or not the enemy has been initialized yet
 
@@ -20,9 +18,10 @@ public class FlyingEnemy : EnemyBase
             pointsPosition[i] = points[i].position;
         }
         Initialize();
+        initialized = true;
         StartCoroutine(Patrol());
     }
-
+    
     private void OnEnable()
     {
         if (!initialized)
@@ -41,7 +40,6 @@ public class FlyingEnemy : EnemyBase
     {
         int current = 0; //the current point the enemy started on
         int target = 1; //the current target point the enemy is going to
-        bool forward = true; //is the enemy moving forwarf through the patrol points
         while (true)
         {
             float progress = 0f;
@@ -61,16 +59,9 @@ public class FlyingEnemy : EnemyBase
 
             current = target;
 
-            target += forward ? 1 : -1;
-            if ((target >= pointsPosition.Length || target < 0) && pingpong)
-            {
-                forward = !forward;
-                target = Mathf.Clamp(target, 0, pointsPosition.Length - 1);
-            }
-            else if (target >= pointsPosition.Length)
-            {
+            target++;
+            if (target >= pointsPosition.Length)
                 target -= pointsPosition.Length;
-            }
         }
     }
 

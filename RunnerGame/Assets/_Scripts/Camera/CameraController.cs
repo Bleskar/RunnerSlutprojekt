@@ -21,6 +21,8 @@ public class CameraController : MonoBehaviour
     float zorig; //original z position of the camera
     float screenShake; //how much is the screen shaking
 
+    Vector3 targetPosition; //where the camera focuses
+
     private void Awake()
     {
         Instance = this; //set the singleton to this instance
@@ -37,8 +39,11 @@ public class CameraController : MonoBehaviour
     {
         CheckRooms(); //check which room the player is in
 
-        //getting the target position within the confines of the current room
-        Vector3 targetPosition = TryGoToPosition(PlayerMovement.transform.position);
+        if (!PlayerCombat.Instance.Dead)
+        {
+            //getting the target position within the confines of the current room only if the player isn't dead
+            targetPosition = TryGoToPosition(PlayerMovement.transform.position);
+        }
 
         //adds the screenshake to the camera
         Vector2 shake = Random.insideUnitCircle * screenShake * 2f;
