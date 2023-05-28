@@ -19,6 +19,9 @@ public class GameManager : MonoBehaviour
         Instance = this;
     }
 
+    [Header("Cursors")]
+    public Sprite[] mouseSprites = new Sprite[0];
+
     //resets the level
     public void ResetLevel()
     {

@@ -5,7 +5,9 @@ public class CameraController : MonoBehaviour
     public static CameraController Instance { get; private set; } //singleton of the camera controller
     static public Camera DisplayCamera => Instance.displayCamera; //public property for the display camera
     static public Vector2 CursorPosition => //cursor position, gets the pixel position of the cursor and translates it into a world position in the Main Camera
-        Camera.main.ViewportToWorldPoint(DisplayCamera.ScreenToViewportPoint(Input.mousePosition));
+        Camera.main.ViewportToWorldPoint(ViewportCursorPosition);
+
+    public static Vector2 ViewportCursorPosition => DisplayCamera.ScreenToViewportPoint(Input.mousePosition);
 
     public PlayerMovement PlayerMovement
     {
@@ -39,7 +41,7 @@ public class CameraController : MonoBehaviour
     {
         CheckRooms(); //check which room the player is in
 
-        if (!PlayerCombat.Instance.Dead)
+        if (PlayerCombat.Instance && !PlayerCombat.Instance.Dead)
         {
             //getting the target position within the confines of the current room only if the player isn't dead
             targetPosition = TryGoToPosition(PlayerMovement.transform.position);

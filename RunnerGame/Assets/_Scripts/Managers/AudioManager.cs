@@ -67,16 +67,16 @@ public class AudioManager : MonoBehaviour
     }
 
     //Play a sound on the instance of the audio manager
-    public void PlayLocal(string a)
+    public void PlayLocal(string name)
     {
-        Sound s = Array.Find(soundLibrary, i => i.name == a);
+        Sound s = Array.Find(soundLibrary, i => i.name == name);
         s.Play(s.volume * effectsVolume * masterVolume);
     }
 
     //Play or change music on the instance of the audio manager
-    public void PlayMusicLocal(string a)
+    public void PlayMusicLocal(string name)
     {
-        Sound s = Array.Find(musicLibrary, i => i.name == a);
+        Sound s = Array.Find(musicLibrary, i => i.name == name);
 
         if (s == currentMusic) return;
 
@@ -122,7 +122,23 @@ public class AudioManager : MonoBehaviour
         transitioning = false;
     }
 
+    //forces music to play immediatly without fading in
+    void ForceMusicLocal(string name)
+    {
+        Sound s = Array.Find(musicLibrary, i => i.name == name);
+
+        if (s == currentMusic) return;
+
+        musicSource.clip = s.clip;
+        musicSource.Play();
+        musicSource.volume = masterVolume * musicVolume * s.volume;
+
+        currentMusic = s;
+    }
+
     //static methods for playing sound effects or music on the audiomanager singleton
-    public static void Play(string a) => Instance.PlayLocal(a);
-    public static void PlayMusic(string a) => Instance.PlayMusicLocal(a);
+    public static void Play(string name) => Instance.PlayLocal(name);
+    public static void PlayMusic(string name) => Instance.PlayMusicLocal(name);
+    public static void ForceMusic(string name) => Instance.ForceMusicLocal(name);
+    public static void ForceStopMusic() => Instance.musicSource.Stop();
 }

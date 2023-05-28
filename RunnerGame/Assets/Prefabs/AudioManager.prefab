@@ -84,6 +84,24 @@ MonoBehaviour:
     volume: 1
     pitch: 1
     pitchRandom: 0.1
+  - name: Select
+    source: {fileID: 0}
+    clip: {fileID: 8300000, guid: 205dbba7539c5c441ad8b01a4afd3750, type: 3}
+    volume: 1
+    pitch: 1
+    pitchRandom: 0
+  - name: Land
+    source: {fileID: 0}
+    clip: {fileID: 8300000, guid: 2dadfeecb95cc4c49a116a220f8aa100, type: 3}
+    volume: 1
+    pitch: 1
+    pitchRandom: 0.25
+  - name: Swoosh
+    source: {fileID: 0}
+    clip: {fileID: 8300000, guid: 2e25c1d50aca53947a59b0ff160c1842, type: 3}
+    volume: 1
+    pitch: 1
+    pitchRandom: 0.25
   musicVolume: 0.75
   musicLibrary:
   - name: Duck n cover
