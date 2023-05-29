@@ -34,7 +34,7 @@ public class PlayerMovement : MonoBehaviour
     bool jumping;
     float holdTimer;
 
-    public bool Frozen => StartTimer.Counting; //can't move when bool is true
+    public bool Frozen => StartTimer.Counting || WinTrigger.HasWon; //can't move when bool is true
 
     //REFRENCES
     public PlayerCombat Combat { get; private set; } //The combat script attached to this object
