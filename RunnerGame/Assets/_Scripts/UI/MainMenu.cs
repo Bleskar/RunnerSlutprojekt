@@ -62,11 +62,6 @@ public class MainMenu : MonoBehaviour
 
         while (Mathf.Abs(logoVelocity) > 8f || logoYPosition > logoEndYPosition)
         {
-            if (Input.GetMouseButtonDown(0))
-            {
-                SkipIntro(); //skip the intro by clicking
-            }
-
             logoVelocity -= 9.82f * Time.deltaTime * 16f; //apply acceleration
             logoYPosition += Time.deltaTime * logoVelocity; //apply velocity
 
@@ -78,6 +73,11 @@ public class MainMenu : MonoBehaviour
             }
 
             logo.anchoredPosition = Vector2.up * logoYPosition;
+
+            if (Input.GetMouseButtonDown(0))
+            {
+                SkipIntro(); //skip the intro by clicking
+            }
             yield return null;
         }
 

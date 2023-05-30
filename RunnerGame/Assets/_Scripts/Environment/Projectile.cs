@@ -100,7 +100,7 @@ public class Projectile : MonoBehaviour
 
     public void Bounce(Vector2 normal)
     {
-        AudioManager.Play("Bounce");
+        if (sr.isVisible) AudioManager.Play("Bounce"); //only play the bounce sound when the projectile is on screen
         Direction = Vector2.Reflect(Direction, normal);
     }
 

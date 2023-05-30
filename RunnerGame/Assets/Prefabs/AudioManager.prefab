@@ -116,5 +116,11 @@ MonoBehaviour:
     volume: 1
     pitch: 1
     pitchRandom: 0
+  - name: Collapse
+    source: {fileID: 0}
+    clip: {fileID: 8300000, guid: b4d9e7f4a2f9a9046a44e4243d84a84e, type: 3}
+    volume: 1
+    pitch: 1
+    pitchRandom: 0
   transitionTime: 0.5
   areaMusic: Duck n cover

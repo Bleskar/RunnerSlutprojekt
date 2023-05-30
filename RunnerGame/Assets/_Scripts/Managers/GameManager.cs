@@ -97,6 +97,6 @@ public class GameManager : MonoBehaviour
         int minutes = (int)(time / 60);
 
         if (minutes > 0) return $"{minutes}:{seconds:N1}";
-        else return $"{seconds:N2}";
+        else return $"{seconds:N1}";
     }
 }

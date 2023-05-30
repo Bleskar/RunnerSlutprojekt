@@ -15,6 +15,9 @@ public class MoveMechanism : Mechanism
     //routine for moving the object
     IEnumerator Move()
     {
+        Quaternion startRot = transform.rotation;
+        Quaternion endRot = end.transform.rotation;
+
         Vector2 start = transform.position;
         Vector2 endPos = end.transform.position;
 
@@ -22,10 +25,12 @@ public class MoveMechanism : Mechanism
         while (timer < moveTime)
         {
             transform.position = Vector2.Lerp(start, endPos, timer / moveTime);
+            transform.rotation = Quaternion.Lerp(startRot, endRot, timer / moveTime);
             timer += Time.deltaTime;
             yield return null;
         }
 
+        transform.rotation = endRot;
         transform.position = endPos;
     }
 
