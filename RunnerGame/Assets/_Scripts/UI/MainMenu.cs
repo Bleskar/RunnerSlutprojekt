@@ -11,6 +11,8 @@ public class MainMenu : MonoBehaviour
     [Header("Transition time")]
     [SerializeField] float transitionTime = .5f;
 
+    float logoEndYPosition; //the deafault logo y position
+
     [Header("Start menu")]
     [SerializeField] RectTransform mainMenu;
     [SerializeField] Image backgroundCover;
@@ -27,11 +29,15 @@ public class MainMenu : MonoBehaviour
     [SerializeField] RectTransform levelSelectMenu;
     string levelSelected;
 
+    Coroutine introAnimation;
+
     // Start is called before the first frame update
     void Start()
     {
         currentMenu = mainMenu;
-        StartCoroutine(IntroAnimation());
+        introAnimation = StartCoroutine(IntroAnimation());
+
+        logoEndYPosition = logo.anchoredPosition.y;
 
         masterSlider.Value = AudioManager.Instance.masterVolume;
         musicSlider.Value = AudioManager.Instance.musicVolume;
@@ -46,13 +52,21 @@ public class MainMenu : MonoBehaviour
         }
         backgroundCover.color = Color.black;
 
+        logo.gameObject.SetActive(false);
+        yield return new WaitForSeconds(.5f);
+
         //logo falls onto screen
-        float logoEndYPosition = logo.anchoredPosition.y;
         float logoYPosition = logo.sizeDelta.y * .5f;
         float logoVelocity = -5f;
+        logo.gameObject.SetActive(true);
 
         while (Mathf.Abs(logoVelocity) > 8f || logoYPosition > logoEndYPosition)
         {
+            if (Input.GetMouseButtonDown(0))
+            {
+                SkipIntro(); //skip the intro by clicking
+            }
+
             logoVelocity -= 9.82f * Time.deltaTime * 16f; //apply acceleration
             logoYPosition += Time.deltaTime * logoVelocity; //apply velocity
 
@@ -81,6 +95,7 @@ public class MainMenu : MonoBehaviour
             timer += Time.deltaTime;
             yield return null;
         }
+        backgroundCover.color = Color.clear;
 
         //slide in buttons
         for (int i = 0; i < buttons.Length; i++)
@@ -97,6 +112,26 @@ public class MainMenu : MonoBehaviour
             AudioManager.Play("Swoosh");
             buttons[i].anchoredPosition = new Vector2(0f, -24f * i);
         }
+    }
+
+    //skips the intro animation
+    public void SkipIntro()
+    {
+        if (introAnimation == null) return;
+
+        StopCoroutine(introAnimation);
+
+        logo.gameObject.SetActive(true);
+        logo.anchoredPosition = Vector2.up * logoEndYPosition;
+
+        for (int i = 0; i < buttons.Length; i++)
+        {
+            buttons[i].gameObject.SetActive(true);
+            buttons[i].anchoredPosition = new Vector2(0f, -24f * i);
+        }
+
+        AudioManager.ForceMusic("Coolduck");
+        backgroundCover.color = Color.clear;
     }
 
     //start transtion between menus

@@ -18,6 +18,7 @@ public class WinTrigger : MonoBehaviour
         if (pm)
         {
             HasWon = true;
+            WinMenu.Instance.Win();
         }
     }
 }
