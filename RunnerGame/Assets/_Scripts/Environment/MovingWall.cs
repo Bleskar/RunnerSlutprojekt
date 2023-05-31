@@ -11,6 +11,9 @@ public class MovingWall : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (PlayerMovement.Instance.Frozen)
+            return;
+
         transform.position += (Vector3)speed * Time.deltaTime;
     }
 

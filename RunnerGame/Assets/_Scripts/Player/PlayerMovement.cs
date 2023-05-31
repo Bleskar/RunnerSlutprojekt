@@ -91,7 +91,8 @@ public class PlayerMovement : MonoBehaviour
         float xInput = Input.GetAxis("Horizontal"); //get the x-input
         if (Frozen) xInput = 0f; //player is not allowed to move if the frozen variable is true
 
-        velocity.y -= airResistance * Mathf.Pow(velocity.y, 2) * Mathf.Sign(velocity.y) * Time.deltaTime; //apply air resistance
+        if (grounded)
+            velocity.y -= airResistance * Mathf.Pow(velocity.y, 2) * Mathf.Sign(velocity.y) * Time.deltaTime; //apply air resistance
         Movement(xInput); //move the player with x-input
 
 

@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/ChemPlant.unity
     guid: d5f39a37349cc714585fa48a5a466715
+  - enabled: 1
+    path: Assets/Scenes/PoisonLake.unity
+    guid: f3cf0b5933cf3ca47984f2727e187950
   m_configObjects: {}
