@@ -122,5 +122,11 @@ MonoBehaviour:
     volume: 1
     pitch: 1
     pitchRandom: 0
+  - name: Poison pond
+    source: {fileID: 0}
+    clip: {fileID: 8300000, guid: 2c047fceff526404d8f03281a71a1edc, type: 3}
+    volume: 1
+    pitch: 1
+    pitchRandom: 0
   transitionTime: 0.5
   areaMusic: Duck n cover
