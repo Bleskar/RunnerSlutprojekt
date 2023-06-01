@@ -4712,9 +4712,9 @@ MonoBehaviour:
 
     Space - jump
 
-    RMB - shoot
+    LMB - shoot
 
-    R$LMB - reload
+    R$RMB - reload
 
     Tab$P
     - pause'
