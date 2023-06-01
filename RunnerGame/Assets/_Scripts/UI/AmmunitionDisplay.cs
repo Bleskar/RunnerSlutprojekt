@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -22,7 +20,7 @@ public class AmmunitionDisplay : MonoBehaviour
     [SerializeField] GameObject reloadDisplay;
     [SerializeField] RectTransform reloadBar;
     Vector2 startSize;
-    public float reloadTime;
+    public float reloadTime; //value between 0 and 1, how far along is the player with reloading?
 
     private void Start()
     {
@@ -44,7 +42,7 @@ public class AmmunitionDisplay : MonoBehaviour
         if (reloadDisplay.activeSelf)
         {
             reloadBar.sizeDelta = new Vector2(reloadTime * startSize.x, startSize.y);
-            reloadBar.anchoredPosition = Vector2.right * reloadBar.sizeDelta.x * .5f;
+            reloadBar.anchoredPosition = Vector2.right * (1f + reloadBar.sizeDelta.x * .5f);
         }
     }
 }
