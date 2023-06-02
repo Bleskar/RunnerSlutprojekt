@@ -119,6 +119,8 @@ public class PlayerMovement : MonoBehaviour
 
             return;
         }
+        else if (velocity.x == 0)
+            return;
 
         //Get the sign of the x-velocity before deaccelerating
         float sign = Mathf.Sign(velocity.x);
